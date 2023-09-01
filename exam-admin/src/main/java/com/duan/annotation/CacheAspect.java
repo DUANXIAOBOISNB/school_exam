@@ -1,8 +1,8 @@
-package com.wzz.annotation;
+package com.duan.annotation;
 
-import com.wzz.exception.BusinessException;
-import com.wzz.exception.CommonErrorCode;
-import com.wzz.utils.RedisUtil;
+import com.duan.exception.BusinessException;
+import com.duan.exception.CommonErrorCode;
+import com.duan.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,22 +17,21 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import static com.wzz.utils.AnnotationUtils.LogAndInvokeTargetMethod;
-import static com.wzz.utils.AnnotationUtils.parseSpel;
+import static com.duan.utils.AnnotationUtils.LogAndInvokeTargetMethod;
+import static com.duan.utils.AnnotationUtils.parseSpel;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class CacheAspect {
+public class  CacheAspect {
 
     private final RedisUtil redisUtil;
 
-    @Around("@annotation(com.wzz.annotation.Cache)")
+    @Around("@annotation(com.duan.annotation.Cache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         // 获取目标方法的对象
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-
         // 目标方法上的注解对象
         Cache cache = method.getAnnotation(Cache.class);
         String cacheKey = cache.prefix();
